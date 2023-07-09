@@ -65,5 +65,5 @@ def multinomial_logreg_model(df):
 
 
 if __name__ == "__main__":
-    train_df = pd.read_csv("kbo_train.csv")
+    train_df = pd.read_csv('./dataset/kbo_train.csv')
     multinomial_logreg_model(train_df)
