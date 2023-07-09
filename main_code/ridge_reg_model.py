@@ -77,7 +77,7 @@ def perform_ridge_with_lasso_selection(df, target_col, test_size, random_state):
 
 
 if __name__ == "__main__":
-    train_df = pd.read_csv("kbo_train.csv")
+    train_df = pd.read_csv('./dataset/kbo_train.csv')
     ridge_model, selected_features, coefficients = perform_ridge_with_lasso_selection(
         train_df,
         'win_loss_percentage', 
