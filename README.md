@@ -97,6 +97,41 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
   
   - The PreprocessData class can be used in combination with the extract_mlb_game_data.py script. The script extracts and transforms the game data, and the class preprocesses it for machine learning applications. The imputation of missing values, scaling of features, and splitting of data are all common steps in a machine learning pipeline, and this class provides an easy and reusable way to perform these tasks.
 
+
+## LDA Class
+  - **Initialization**
+    The class doesn't require any parameters during initialization.
+    
+  - **fit_lda method**
+    This method fits the LDA model on the training data. It takes the training data (X_train and y_train) and the number of components to keep (n_components) as input and returns the fitted LDA model and the transformed X_train.
+    
+  - **plot_lda method**
+    This method creates a scatter plot of the data in the first two linear discriminant spaces. The points are colored according to their class labels. This visualization helps understand how well the classes are separated by the LDA.
+
+- **lda_coef method**
+    This method returns a dataframe that contains the coefficients of the discriminant function for each class. It can help interpret the impact of the features on the classification.
+
+- **Usage in Main Script**
+    Both PreprocessModelData and LDA_explore classes are utilized in the main script for data preprocessing and analysis respectively. Here's a brief step-by-step rundown of the main script:
+
+  1. The script first initializes the PreprocessModelData and LDA_explore classes.
+  
+  2. The script reads a CSV file into a dataframe and preprocesses it by handling missing values using the specified strategy.
+  
+  3. The features and target variable are separated from the dataframe. The target variable 'win_loss_percentage' is transformed into a categorical variable.
+  
+  4. The features are scaled using the scale_features method.
+  
+  5. The preprocessed dataset is split into a training set and a test set.
+  
+  6. LDA is fitted on the training data using the fit_lda method.
+  
+  7. A scatter plot of the data in the first two linear discriminant spaces is displayed.
+  
+  8. The lda_coef method is used to get a dataframe that contains the coefficients of the discriminant function for each class. These coefficients are saved to a CSV file.
+  
+  9. By incorporating both preprocessing and analysis in the script, we can efficiently prepare our data for machine learning and perform exploratory data analysis.
+
 ## pythagorean_expectation_modeling.py
 ### Preprocessing the Data
   The script starts by loading two data files: team_win_loss_probabilities.csv and teams.csv. The former is presumed to contain historical win-loss probability data for baseball teams, while the latter contains team identifiers and corresponding team names. A dictionary mapping team IDs to team names is created from the teams.csv data.
