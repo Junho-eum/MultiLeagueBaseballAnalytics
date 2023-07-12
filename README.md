@@ -105,7 +105,41 @@ The function performs several transformations and aggregations on the data:
 
   - By preparing the data in this way, the preprocess_league_data function makes it easier to analyze the performance of different teams across different seasons and even across different leagues.
 
-## Expected Output
+
+## Linear Discriminant Analysis (LDA)
+
+  - In this section, I utilize the Linear Discriminant Analysis (LDA) method to perform a linear transformation on the features of our dataset. The primary goal of this approach is to increase class separability by reducing dimensionality, which will further help us in creating a model that can accurately classify the data.
+  - Class Methods
+The class contains several methods dedicated to specific steps in the LDA process. Here's a brief description of each method:
+
+fit_lda: This function takes the train data, standardizes it, and then fits an LDA model. The function returns the trained LDA model and the transformed data.
+
+plot_lda: This function plots the LDA-transformed data.
+
+lda_coef: This function extracts the coefficients of the LDA model, which are used to select features based on the given threshold.
+
+check_collinearity: This function checks the collinearity of features using Variance Inflation Factor (VIF).
+
+select_features_based_on_coef: This function selects features whose absolute coefficients are greater than a given threshold.
+
+plot_vif_data: This function plots the VIF scores of the features.
+
+run_analysis: This function executes the entire LDA process from preprocessing the data to plotting the VIF scores and LDA coefficients. This is the main function that you'll call to run the analysis.
+
+### Instructions
+First, import the necessary modules and the LDA class. Then, create an instance of the LDA class, passing the dataframe and threshold as parameters. Finally, call the run_analysis method on the instance.
+```
+df = pd.read_csv("team_season_statistics.csv")
+lda = LDA(df)
+lda.run_analysis()
+```
+This will preprocess the data, run the LDA, and output the analysis results, which includes plots, explained variance ratio, LDA coefficients, and the selected features based on the given threshold.
+
+This process helps to transform the feature space, reduce dimensionality, and increase class separability, making it easier to develop accurate and efficient classification models.
+
+For more detailed code understanding, please refer to the inline comments and the function definitions inside the class.
+
+### Expected Output
   - The script will output the Mean Squared Error (MSE) and R-Squared (R^2) for each year in the data. Here are some example outputs you might expect:
     ```
     Pythagorean Expectation: MSE = 0.043825052872218384, R^2 = 0.04972759343921895
