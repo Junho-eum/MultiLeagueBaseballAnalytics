@@ -10,7 +10,7 @@ impute_strategy_dict = {
 def main():
     # Instantiate PreprocessData and AnalyzeData classes
     preprocessor = PreprocessData(impute_strategy_dict)
-    analyzer = LDA_explore()
+    analyzer = LDA()
 
     df = pd.read_csv("./dataset/kbo_train.csv")
     df = preprocessor.handle_missing_data(df)
