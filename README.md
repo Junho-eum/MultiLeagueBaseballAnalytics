@@ -101,5 +101,13 @@ poly = PolynomialFeatures(degree=2)
 ```
 
 A linear regression model is trained using the training data. The model's performance is evaluated on the test data using the mean squared error (MSE) and the R-squared (R²) statistic, which are printed out for each year.
+```
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+mse_pythag = mean_squared_error(y_test, y_pred)
+r2_pythag = r2_score(y_test, y_pred)
+print(f'Pythagorean Expectation: MSE = {mse_pythag}, R^2 = {r2_pythag}')
+```
 
 This process is repeated for each year in the range, resulting in a separate model and performance metrics for each year. It allows you to see how the model's performance varies from year to year and potentially spot any trends or anomalies.
