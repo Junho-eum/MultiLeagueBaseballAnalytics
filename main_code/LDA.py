@@ -2,7 +2,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import pandas as pd
 import matplotlib.pyplot as plt
 
-class LDA_explore:
+class LDA:
     def __init__(self):
         pass
 
