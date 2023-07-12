@@ -3,81 +3,46 @@
 ## Data Collection Process
 - This project involves data from multiple baseball leagues, each with their unique playing styles. The data for these analyses was collected from the following sources:
 
-### Major League Baseball (MLB) Data
+## Extracting Yearly Team Box Score Data (mlb_collect.py)
+- This script is used to process and transform the MLB data sourced from the Kaggle MLB Player Digital Engagement Forecasting competition. The raw data includes nested JSON within a CSV file, which is then extracted and transformed into a more usable format.
 
-- The MLB data was sourced from the Kaggle MLB Player Digital Engagement Forecasting competition. The relevant data includes team box scores, team win/loss probabilities, and team data:
+- Here's a breakdown of the steps:
+  1. **Download Data**: The raw data can be downloaded directly from the Kaggle competition page. Make sure to download the 'train.csv' file.
 
-- **Download Data**: The data can be downloaded directly from the Kaggle competition page. Make sure to download the 'train.csv' file.
-
-- **Extract and Transform Data**: The downloaded data is in nested JSON format within a CSV file. To handle this data, each row was read in and transformed from JSON into a pandas DataFrame. For each date in the dataset, a new row was created for each team, including metrics such as runs scored, runs allowed, and other stats.
-  - First, the dataset was loaded into a pandas DataFrame from the CSV file named "train.csv".
-    ```
-    import pandas as pd
-    import json
-    df = pd.read_csv("./train.csv")
-    ```
-  - The "games" column from the DataFrame, which contains the JSON data of interest, was isolated and stored in a variable. This data was then transformed from a string representation of JSON to actual JSON objects.
-    ```
-    teamBoxScores_data = df["games"].dropna()
-    teamBoxScores_data = teamBoxScores_data.apply(lambda x: json.loads(x.replace('null', 'None')) if pd.notnull(x) else None)
-    ```
-  - The JSON data was then converted to a pandas DataFrame using the json_normalize function.
-    ```
-    teamBoxScores_df = pd.json_normalize(teamBoxScores_nested_json)
-    ```
-  - The resulting DataFrame was saved to a CSV file named "mlb_data.csv".
-    ```
-    teamBoxScores_df.to_csv('./mlb_data.csv', index=False)
-    ```
-- **Preprocessing the Data**: After the data extraction and conversion, some preprocessing steps were applied. The "gameDate" column, which contains the dates of games, was converted to the datetime format.
+  2. **Load Data**: The dataset is loaded into a pandas DataFrame from the 'train.csv' file.
   ```
-  data = pd.read_csv('mlb_data.csv')
-  data['gameDate'] = pd.to_datetime(data['gameDate'])
+  import pandas as pd
+  import json
+  df = pd.read_csv("./train.csv")
   ```
-  - The year from each game date was extracted and stored in a new column, "year".
+  3. **Extract and Transform Data**: The "games" column from the DataFrame, which contains the JSON data of interest, is isolated. The JSON string is transformed into actual JSON objects and then converted to a pandas DataFrame using the json_normalize function.
   ```
-  data['year'] = data['gameDate'].dt.year
+  teamBoxScores_data = df["games"].dropna()
+  teamBoxScores_data = teamBoxScores_data.apply(lambda x: json.loads(x.replace('null', 'None')) if pd.notnull(x) else None)
+  teamBoxScores_df = pd.json_normalize(teamBoxScores_nested_json)
   ```
-  - Finally, the data was grouped by year and by team ID to compute yearly statistics for each team. The computed yearly team stats were saved to separate CSV files for each year.
-  - With the data now unpacked from its nested JSON format and grouped by year and team, it is ready for easier analysis and modeling.
-  ```
-  for year in data['year'].unique():
+  4. **Preprocessing the Data**: The "gameDate" column, which contains the dates of games, is converted to datetime format. The year from each game date is extracted and stored in a new column, "year".
+    ```
+    data = pd.read_csv('mlb_data.csv')
+    data['gameDate'] = pd.to_datetime(data['gameDate'])
+    data['year'] = data['gameDate'].dt.year
+    ```
+  5. **Yearly Team Box Score Data Extraction**: The data is grouped by year and by team ID to compute yearly statistics for each team. The computed yearly team stats are saved to separate CSV files for each year, which provides us with the yearly team box score data.
+   ```
+   for year in data['year'].unique():
     yearly_data = data[data['year'] == year]
     yearly_team_stats = yearly_data.groupby('teamId').sum()
     yearly_team_stats.to_csv(f'year_{year}.csv')
-  ```
-- The extraction and transformation process was carried out using mlb_collect.py using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
+   ```
+  To run this script, use the following command:
+   ```
+   python mlb_collect.py
+   ```
+   Please ensure that the input CSV file ('train.csv') is in the correct path before running the script. After the script has run, check the output CSV files to see the extracted yearly team box score data.
 
-## Generating Team Season Statistics (team_season_stat_gen.py)
+Remember to check and confirm that the output files ('year_{year}.csv') are in the desired output directory after running the script.
 
-- This script is used to generate a DataFrame containing each team's season statistics, structured to be compatible with our other league datasets. It does this by merging extracted data from MLB datasets and computing relevant statistics.
-
-  Below is a brief summary of its steps:
-  
-  1. Load Data: The script first loads two dataframes from 'mlb_win_losses.csv' and 'mlb_data.csv'.
-  
-  2. Data Aggregation: The script then aggregates the statistics on a per team, per season basis from the MLB win-loss data. The statistics calculated include the total wins, total losses, win probability, and loss probability.
-     
-  4. Home and Away Win/Loss Calculation: Using the DataFrame created from 'mlb_win_losses.csv', the script separately calculates the total home wins and losses and away wins and losses for each team in each season.
-     
-  5. Statistical Calculation: Using these aggregate statistics, the script computes the win-loss ratio for each team in each season.
-  
-  6. Data Preparation: The script also processes 'mlb_data.csv' to create another DataFrame, grouping the data by 'season' and 'teamId' and calculating the mean for numerical columns.
-  
-  7. Data Merge: The two DataFrames created from 'mlb_win_losses.csv' and 'mlb_data.csv' are then merged based on 'season' and 'teamId'.
-  
-The resulting DataFrame is saved as 'team_win_loss_probabilities.csv'. This data includes all the provided features along with the calculated win-loss ratio, giving us a more comprehensive view of each team's performance in each season.
-  
-To run this script, use the following command:
-  
-  ```
-  python team_season_stat_gen.py
-  ```
-Please ensure that the input CSV files ('mlb_win_losses.csv' and 'mlb_data.csv') are in the correct path before running the script.
-
-Remember to check and confirm that the output file ('team_win_loss_probabilities.csv') is in the desired output directory after running the script.
-
-Keep in mind that the structure of your data files ('mlb_win_losses.csv' and 'mlb_data.csv') should conform to the structure expected by the script for it to run successfully. Check the example data provided for the expected format and structure.
+Keep in mind that the structure of your input data file ('train.csv') should conform to the structure expected by the script for it to run successfully. Check the example data provided for the expected format and structure.
 
 ## extract_mlb_game_data.py
 - This script loads, parses, and transforms a dataset containing information about baseball games. The source data is assumed to be in CSV format, with one of the columns containing JSON strings that encapsulate detailed game data.
