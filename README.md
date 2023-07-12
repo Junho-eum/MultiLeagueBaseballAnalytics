@@ -48,6 +48,32 @@
   ```
 - The extraction and transformation process was carried out using mlb_collect.py using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
 
+### extract_mlb_game_data.py
+- This script loads, parses, and transforms a dataset containing information about baseball games. The source data is assumed to be in CSV format, with one of the columns containing JSON strings that encapsulate detailed game data.
+  
+  1. Data Loading
+  The script starts by loading a CSV file into a Pandas DataFrame.
+  
+  2. Dataframe Initialization
+  An empty DataFrame is initialized. This will be used to store the processed game data.
+  
+  3. Row Iteration
+  The script iterates over each row in the original DataFrame, checking for any missing or malformed data in the 'games' column.
+  
+  4. JSON Data Parsing
+  For rows with valid 'games' data, the script attempts to parse the JSON data into a Python object. It handles any potential JSON decoding errors gracefully by printing an error message and continuing with the next row.
+  
+  5. JSON to DataFrame Conversion
+  Upon successful parsing, the script converts the Python object (derived from the JSON data) into a DataFrame. This process is known as 'flattening' the JSON structure.
+  
+  6. Appending to the Main DataFrame
+  The new DataFrame is then appended to the main DataFrame, ensuring a continuous index across the whole dataset.
+  
+  7. Saving the DataFrame
+  Finally, the complete DataFrame, containing the parsed and transformed game data, is saved to a new CSV file.
+  
+  This script is particularly useful for scenarios where game data is stored in JSON format within a CSV file, and where this data needs to be extracted, transformed, and saved in a flat, tabular format. Note that the script specifically looks for a 'games' column in the source CSV file and expects this to contain valid JSON strings.
+
 ## pythagorean_expectation_modeling.py
 ### Preprocessing the Data
   The script starts by loading two data files: team_win_loss_probabilities.csv and teams.csv. The former is presumed to contain historical win-loss probability data for baseball teams, while the latter contains team identifiers and corresponding team names. A dictionary mapping team IDs to team names is created from the teams.csv data.
