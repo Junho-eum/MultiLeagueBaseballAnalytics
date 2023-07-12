@@ -37,7 +37,7 @@ def Pythagorean_expectation_modeling(df, runsScored, runsAllowed, win_loss_proba
 
 if __name__ == "__main__":
     # Load your datasets
-    win_loss_prob = pd.read_csv('/Users/junhoeum/Desktop/Summer_23/KBO_analytics/code/team_win_loss_probabilities.csv')
+    win_loss_prob = pd.read_csv('./dataset/mlb_win_loss_probabilities.csv')
     teams = pd.read_csv('./dataset/mlb_teams.csv')
 
     # Create mapping from teamId to teamName
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     # Loop through each year
     for year in range(2018, 2022):  # 2022 is used as the end point as the range function does not include the end point
-        team_boxscore = pd.read_csv(f'/Users/junhoeum/Desktop/Summer_23/KBO_analytics/code/MLB_yearly_boxscore/year_{year}.csv')
+        team_boxscore = pd.read_csv(f'./dataset/MLB_yearly_boxscore/year_{year}.csv')
 
         # Ensure that 'year' column matches current year
         team_boxscore['year'] = int(year)  # the int() function converts the year to an integer
