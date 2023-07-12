@@ -50,7 +50,7 @@
 
 
 
-### extract_mlb_game_data.py
+## extract_mlb_game_data.py
 - This script loads, parses, and transforms a dataset containing information about baseball games. The source data is assumed to be in CSV format, with one of the columns containing JSON strings that encapsulate detailed game data.
   
   1. Data Loading
@@ -166,33 +166,33 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
   At the end of this preprocessing step, for each year in the given range, you will have a dataset that includes total runs scored, total runs allowed, team names, and corresponding win-loss probabilities for each team. These datasets are then saved as pythagorean_output_{year}.csv.
 
 
-### Pythagorean Expectation Calculation and Modeling
-The Pythagorean expectation is a formula that estimates a team's win percentage based on the number of runs it scores and allows. In baseball analytics, it's often used to evaluate a team's performance compared to their actual win percentage.
+## Pythagorean Expectation Calculation and Modeling
+- The Pythagorean expectation is a formula that estimates a team's win percentage based on the number of runs it scores and allows. In baseball analytics, it's often used to evaluate a team's performance compared to their actual win percentage.
 
-The script computes the Pythagorean expectation for each team in the processed data and adds it as a new column, pythag_expect.
-```
-df['pythag_expect'] = (df[runsScored] ** 2) / (df[runsScored] ** 2 + df[runsAllowed] ** 2)
-```
+- The script computes the Pythagorean expectation for each team in the processed data and adds it as a new column, pythag_expect.
+  ```
+  df['pythag_expect'] = (df[runsScored] ** 2) / (df[runsScored] ** 2 + df[runsAllowed] ** 2)
+  ```
 
-The script then prepares the data for the machine learning model. It creates a 2-D feature matrix X with runs scored and runs allowed, and a target variable y with the win-loss probability.
-```
-X = df[[runsScored, runsAllowed]]
-y = df[win_loss_probability]
-```
+- The script then prepares the data for the machine learning model. It creates a 2-D feature matrix X with runs scored and runs allowed, and a target variable y with the win-loss probability.
+  ```
+  X = df[[runsScored, runsAllowed]]
+  y = df[win_loss_probability]
+  ```
 
-Next, the script uses scikit-learn's PolynomialFeatures to generate polynomial and interaction features from the runs scored and runs allowed. This expanded feature matrix X_poly is then split into training and testing datasets, with 80% of the data used for training and 20% for testing.
-```
-poly = PolynomialFeatures(degree=2)
-```
+- Next, the script uses scikit-learn's PolynomialFeatures to generate polynomial and interaction features from the runs scored and runs allowed. This expanded feature matrix X_poly is then split into training and testing datasets, with 80% of the data used for training and 20% for testing.
+  ```
+  poly = PolynomialFeatures(degree=2)
+  ```
 
-A linear regression model is trained using the training data. The model's performance is evaluated on the test data using the mean squared error (MSE) and the R-squared (R²) statistic, which are printed out for each year.
-```
-model = LinearRegression()
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-mse_pythag = mean_squared_error(y_test, y_pred)
-r2_pythag = r2_score(y_test, y_pred)
-print(f'Pythagorean Expectation: MSE = {mse_pythag}, R^2 = {r2_pythag}')
-```
+- A linear regression model is trained using the training data. The model's performance is evaluated on the test data using the mean squared error (MSE) and the R-squared (R²) statistic, which are printed out for each year.
+  ```
+  model = LinearRegression()
+  model.fit(X_train, y_train)
+  y_pred = model.predict(X_test)
+  mse_pythag = mean_squared_error(y_test, y_pred)
+  r2_pythag = r2_score(y_test, y_pred)
+  print(f'Pythagorean Expectation: MSE = {mse_pythag}, R^2 = {r2_pythag}')
+  ```
 
-This process is repeated for each year in the range, resulting in a separate model and performance metrics for each year. It allows you to see how the model's performance varies from year to year and potentially spot any trends or anomalies.
+- This process is repeated for each year in the range, resulting in a separate model and performance metrics for each year. It allows you to see how the model's performance varies from year to year and potentially spot any trends or anomalies.
