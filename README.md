@@ -55,8 +55,22 @@ Remember to check and confirm that the output files ('year_{year}.csv') are in t
 
 Keep in mind that the structure of your input data file ('train.csv') should conform to the structure expected by the script for it to run successfully. Check the example data provided for the expected format and structure.
 
+
+## Expected Output
+  - The script will output the Mean Squared Error (MSE) and R-Squared (R^2) for each year in the data. Here are some example outputs you might expect:
+    ```
+    Pythagorean Expectation: MSE = 0.043825052872218384, R^2 = 0.04972759343921895
+    Pythagorean Expectation: MSE = 0.03606235134234921, R^2 = -0.17769687170829518
+    Pythagorean Expectation: MSE = 0.004137536723744783, R^2 = 0.6199216545300004
+    Pythagorean Expectation: MSE = 0.0035629027629842376, R^2 = -0.37132119335757463
+    ```
+- Additionally, the script will create an LDA scatter plot. An example of such a plot might look something like this:
+
+[LDA_KBO_data](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/0a961a73-b4be-4af6-ad89-00c69217ac4e)
+
 ## extract_mlb_game_data.py
-- This script loads, parses, and transforms a dataset containing information about baseball games. The source data is assumed to be in CSV format, with one of the columns containing JSON strings that encapsulate detailed game data.
+- This script loads, parses, and transforms a dataset containing information about ba!
+seball games. The source data is assumed to be in CSV format, with one of the columns containing JSON strings that encapsulate detailed game data.
   
   1. Data Loading
   The script starts by loading a CSV file into a Pandas DataFrame.
