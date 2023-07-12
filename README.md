@@ -102,7 +102,7 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
   - **Initialization**: The class doesn't require any parameters during initialization.
     
   - **fit_lda method**
-    This method fits the LDA model on the training data. It takes the training data (X_train and y_train) and the number of components to keep (n_components) as input and returns the fitted LDA model and the transformed X_train.
+    - This method fits the LDA model on the training data. It takes the training data (X_train and y_train) and the number of components to keep (n_components) as input and returns the fitted LDA model and the transformed X_train.
     
   - **plot_lda method**
     This method creates a scatter plot of the data in the first two linear discriminant spaces. The points are colored according to their class labels. This visualization helps understand how well the classes are separated by the LDA.
