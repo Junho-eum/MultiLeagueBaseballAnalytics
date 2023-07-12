@@ -9,12 +9,11 @@ class PreprocessData:
 
     def handle_missing_data(self, df):
         for column, strategy in self.impute_strategy_dict.items():
-            if strategy == 'mean':
-                df[column].fillna(df[column].mean(), inplace=True)
-            elif strategy == 'median':
-                df[column].fillna(df[column].median(), inplace=True)
-            elif strategy == 'mode':
-                df[column].fillna(df[column].mode()[0], inplace=True)
+            if column in df.columns:
+                if strategy == 'mean':
+                    df[column].fillna(df[column].mean(), inplace=True)
+                elif strategy == 'median':
+                    df[column].fillna(df[column].median(), inplace=True)
         return df
 
     def separate_features_target(self, df, target_column):
@@ -37,3 +36,18 @@ class PreprocessData:
     def split_data(self, X, y, test_size=0.2, random_state=42):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
         return X_train, X_test, y_train, y_test
+
+    def remove_features(self, X, feature_names):
+        """
+        Removes specified features from the dataframe.
+
+        Parameters:
+            X (pd.DataFrame): The input DataFrame.
+            feature_names (list): The list of feature names to remove.
+
+        Returns:
+            X_new (pd.DataFrame): The DataFrame with specified features removed.
+        """
+        X_new = X.drop(feature_names, axis=1)
+        return X_new
+    
