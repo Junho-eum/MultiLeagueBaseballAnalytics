@@ -6,10 +6,6 @@ from statsmodels.miscmodels.ordinal_model import OrderedModel
 from scipy.stats import norm
 from preprocess_kbo_data import read_merge_data
 
-
-
-
-
 # Create function to generate the levels
 def create_level(x):
     if x < 0.45:
