@@ -10,7 +10,6 @@ from matplotlib.axes._axes import _log as matplotlib_axes_logger
 from dataclasses import dataclass
 matplotlib_axes_logger.setLevel('ERROR')
 warnings.filterwarnings('ignore')
-
 import json
 
 df = pd.read_csv("./train.csv")
@@ -28,3 +27,23 @@ teamBoxScores_df = pd.json_normalize(teamBoxScores_nested_json) # or teamBoxScor
 
 # Save as CSV
 teamBoxScores_df.to_csv('./mlb_data.csv', index=False)
+
+# Load the data
+data = pd.read_csv('mlb_data.csv')
+
+# Convert the gameDate column to datetime
+data['gameDate'] = pd.to_datetime(data['gameDate'])
+
+# Extract the year from each date
+data['year'] = data['gameDate'].dt.year
+
+# Loop over each unique year
+for year in data['year'].unique():
+    # Select only the rows for that year
+    yearly_data = data[data['year'] == year]
+
+    # Compute yearly stats for each team
+    yearly_team_stats = yearly_data.groupby('teamId').sum()
+
+    # Save that to a CSV
+    yearly_team_stats.to_csv(f'year_{year}.csv')
