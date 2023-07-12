@@ -289,6 +289,8 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
   - Note: Ensure that the dataset file path, target column name, test size, and random state are correctly specified before running the function.
 
 ### Expected output
+  - After running the perform_ridge_with_lasso_selection function, you can expect a printed output and a plot.
+  - output will indicate how many features were selected and how many were eliminated by the Lasso regression. The coefficient values for the selected features will also be displayed. Lastly, the best alpha values found for both the Lasso and Ridge regressions will be printed.
   ```
   Lasso picked 23 variables and eliminated the other 27 variables
   average_age          -0.000350
@@ -319,4 +321,7 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
   Best alpha for Lasso:  0.0001
   Best alpha for Ridge:  0.019306977288832496
   ```
+
+  - Additionally, a plot will be displayed showing the feature importance based on the coefficients from the Lasso regression. The plot is a horizontal bar plot where the x-axis represents the coefficient value and the y-axis represents the feature names. The longer the bar, the higher the importance of that feature.
+    
 ![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/4fd3b22d-efe9-43eb-87fe-353dafac5bb0)
