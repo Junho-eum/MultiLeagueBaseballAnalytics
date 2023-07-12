@@ -45,6 +45,5 @@
     yearly_data = data[data['year'] == year]
     yearly_team_stats = yearly_data.groupby('teamId').sum()
     yearly_team_stats.to_csv(f'year_{year}.csv')
-
   ```
 - The extraction and transformation process was carried out using mlb_collect.py using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
