@@ -66,7 +66,7 @@ Keep in mind that the structure of your input data file ('train.csv') should con
     ```
 - Additionally, the script will create an LDA scatter plot. An example of such a plot might look something like this:
 
-[LDA_KBO_data](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/0a961a73-b4be-4af6-ad89-00c69217ac4e)
+![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/0a961a73-b4be-4af6-ad89-00c69217ac4e)
 
 ## extract_mlb_game_data.py
 - This script loads, parses, and transforms a dataset containing information about ba!
