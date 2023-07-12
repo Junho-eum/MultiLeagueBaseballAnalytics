@@ -1,7 +1,8 @@
 # Baseball_Analytics
 
 ## Data Collection Process
-- This project involves data from multiple baseball leagues, each with their unique playing styles. The data for these analyses was collected from the following sources:
+- This project involves data from multiple baseball leagues, each with their unique playing styles. The data for these analyses was collected from the following source:
+https://www.kaggle.com/competitions/mlb-player-digital-engagement-forecasting/data?select=train.csv
 
 ## Extracting Yearly Team Box Score Data (mlb_collect.py)
 - This script is used to process and transform the MLB data sourced from the Kaggle MLB Player Digital Engagement Forecasting competition. The raw data includes nested JSON within a CSV file, which is then extracted and transformed into a more usable format.
@@ -10,34 +11,44 @@
   1. **Download Data**: The raw data can be downloaded directly from the Kaggle competition page. Make sure to download the 'train.csv' file.
 
   2. **Load Data**: The dataset is loaded into a pandas DataFrame from the 'train.csv' file.
+     
   ```
   import pandas as pd
   import json
   df = pd.read_csv("./train.csv")
   ```
+  
   3. **Extract and Transform Data**: The "games" column from the DataFrame, which contains the JSON data of interest, is isolated. The JSON string is transformed into actual JSON objects and then converted to a pandas DataFrame using the json_normalize function.
+     
   ```
   teamBoxScores_data = df["games"].dropna()
   teamBoxScores_data = teamBoxScores_data.apply(lambda x: json.loads(x.replace('null', 'None')) if pd.notnull(x) else None)
   teamBoxScores_df = pd.json_normalize(teamBoxScores_nested_json)
   ```
+  
   4. **Preprocessing the Data**: The "gameDate" column, which contains the dates of games, is converted to datetime format. The year from each game date is extracted and stored in a new column, "year".
+     
     ```
     data = pd.read_csv('mlb_data.csv')
     data['gameDate'] = pd.to_datetime(data['gameDate'])
     data['year'] = data['gameDate'].dt.year
     ```
+    
   5. **Yearly Team Box Score Data Extraction**: The data is grouped by year and by team ID to compute yearly statistics for each team. The computed yearly team stats are saved to separate CSV files for each year, which provides us with the yearly team box score data.
+     
    ```
    for year in data['year'].unique():
     yearly_data = data[data['year'] == year]
     yearly_team_stats = yearly_data.groupby('teamId').sum()
     yearly_team_stats.to_csv(f'year_{year}.csv')
    ```
+   
   To run this script, use the following command:
+  
    ```
    python mlb_collect.py
    ```
+   
    Please ensure that the input CSV file ('train.csv') is in the correct path before running the script. After the script has run, check the output CSV files to see the extracted yearly team box score data.
 
 Remember to check and confirm that the output files ('year_{year}.csv') are in the desired output directory after running the script.
