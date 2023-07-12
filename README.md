@@ -110,34 +110,36 @@ The function performs several transformations and aggregations on the data:
 
   - In this section, I utilize the Linear Discriminant Analysis (LDA) method to perform a linear transformation on the features of our dataset. The primary goal of this approach is to increase class separability by reducing dimensionality, which will further help us in creating a model that can accurately classify the data.
   - Class Methods
-The class contains several methods dedicated to specific steps in the LDA process. Here's a brief description of each method:
+  - The class contains several methods dedicated to specific steps in the LDA process. Here's a brief description of each method:
 
-fit_lda: This function takes the train data, standardizes it, and then fits an LDA model. The function returns the trained LDA model and the transformed data.
-
-plot_lda: This function plots the LDA-transformed data.
-
-lda_coef: This function extracts the coefficients of the LDA model, which are used to select features based on the given threshold.
-
-check_collinearity: This function checks the collinearity of features using Variance Inflation Factor (VIF).
-
-select_features_based_on_coef: This function selects features whose absolute coefficients are greater than a given threshold.
-
-plot_vif_data: This function plots the VIF scores of the features.
-
-run_analysis: This function executes the entire LDA process from preprocessing the data to plotting the VIF scores and LDA coefficients. This is the main function that you'll call to run the analysis.
+    - fit_lda: This function takes the train data, standardizes it, and then fits an LDA model. The function returns the trained LDA model and the transformed data.
+    
+    - plot_lda: This function plots the LDA-transformed data.
+    
+    - lda_coef: This function extracts the coefficients of the LDA model, which are used to select features based on the given threshold.
+    
+    - check_collinearity: This function checks the collinearity of features using Variance Inflation Factor (VIF).
+    
+    - select_features_based_on_coef: This function selects features whose absolute coefficients are greater than a given threshold.
+    
+    - plot_vif_data: This function plots the VIF scores of the features.
+    
+    - run_analysis: This function executes the entire LDA process from preprocessing the data to plotting the VIF scores and LDA coefficients. This is the main function that you'll call to run the analysis.
 
 ### Instructions
-First, import the necessary modules and the LDA class. Then, create an instance of the LDA class, passing the dataframe and threshold as parameters. Finally, call the run_analysis method on the instance.
-```
-df = pd.read_csv("team_season_statistics.csv")
-lda = LDA(df)
-lda.run_analysis()
-```
-This will preprocess the data, run the LDA, and output the analysis results, which includes plots, explained variance ratio, LDA coefficients, and the selected features based on the given threshold.
+  - First, import the necessary modules and the LDA class. Then, create an instance of the LDA class, passing the dataframe and threshold as parameters. Finally, call the run_analysis method on the instance.
+  
+  ```
+  df = pd.read_csv("team_season_statistics.csv")
+  lda = LDA(df)
+  lda.run_analysis()
+  ```
+  
+  - This will preprocess the data, run the LDA, and output the analysis results, which includes plots, explained variance ratio, LDA coefficients, and the selected features based on the given threshold.
 
-This process helps to transform the feature space, reduce dimensionality, and increase class separability, making it easier to develop accurate and efficient classification models.
+  - This process helps to transform the feature space, reduce dimensionality, and increase class separability, making it easier to develop accurate and efficient classification models.
 
-For more detailed code understanding, please refer to the inline comments and the function definitions inside the class.
+  - For more detailed code understanding, please refer to the inline comments and the function definitions inside the class.
 
 ### Expected Output
   - The script will output the Mean Squared Error (MSE) and R-Squared (R^2) for each year in the data. Here are some example outputs you might expect:
@@ -147,9 +149,10 @@ For more detailed code understanding, please refer to the inline comments and th
     Pythagorean Expectation: MSE = 0.004137536723744783, R^2 = 0.6199216545300004
     Pythagorean Expectation: MSE = 0.0035629027629842376, R^2 = -0.37132119335757463
     ```
-- Additionally, the script will create an LDA scatter plot. An example of such a plot might look something like this:
+- Additionally, the script will create an LDA scatter plot and a vif plot to measure collinearity. An example of such a plot might look something like this:
 
 ![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/0a961a73-b4be-4af6-ad89-00c69217ac4e)
+![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/0dfd41dd-83f9-4a09-8073-d14f948796dd)
 
 ## extract_mlb_game_data.py
 - This script loads, parses, and transforms a dataset containing information about ba!
@@ -198,41 +201,6 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
     - This method splits the dataset into training and testing subsets. It uses scikit-learn's train_test_split function, which shuffles the dataset and splits it. The default test size is 20% of the total dataset.
   
   - The PreprocessData class can be used in combination with the extract_mlb_game_data.py script. The script extracts and transforms the game data, and the class preprocesses it for machine learning applications. The imputation of missing values, scaling of features, and splitting of data are all common steps in a machine learning pipeline, and this class provides an easy and reusable way to perform these tasks.
-
-
-## LDA Class
-  - **Initialization**
-    - The class doesn't require any parameters during initialization.
-    
-  - **fit_lda method**
-    - This method fits the LDA model on the training data. It takes the training data (X_train and y_train) and the number of components to keep (n_components) as input and returns the fitted LDA model and the transformed X_train.
-    
-  - **plot_lda method**
-    - This method creates a scatter plot of the data in the first two linear discriminant spaces. The points are colored according to their class labels. This visualization helps understand how well the classes are separated by the LDA.
-
-- **lda_coef method**
-    - This method returns a dataframe that contains the coefficients of the discriminant function for each class. It can help interpret the impact of the features on the classification.
-
-- **Usage in Main Script**
-    - Both PreprocessModelData and LDA_explore classes are utilized in the main script for data preprocessing and analysis respectively. Here's a brief step-by-step rundown of the main script:
-
-  1. The script first initializes the PreprocessModelData and LDA_explore classes.
-  
-  2. The script reads a CSV file into a dataframe and preprocesses it by handling missing values using the specified strategy.
-  
-  3. The features and target variable are separated from the dataframe. The target variable 'win_loss_percentage' is transformed into a categorical variable.
-  
-  4. The features are scaled using the scale_features method.
-  
-  5. The preprocessed dataset is split into a training set and a test set.
-  
-  6. LDA is fitted on the training data using the fit_lda method.
-  
-  7. A scatter plot of the data in the first two linear discriminant spaces is displayed.
-  
-  8. The lda_coef method is used to get a dataframe that contains the coefficients of the discriminant function for each class. These coefficients are saved to a CSV file.
-  
-  9. By incorporating both preprocessing and analysis in the script, we can efficiently prepare our data for machine learning and perform exploratory data analysis.
 
 ## pythagorean_expectation_modeling.py
 ### Preprocessing the Data
