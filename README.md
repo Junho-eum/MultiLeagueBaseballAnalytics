@@ -266,3 +266,57 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
   ```
 
 - This process is repeated for each year in the range, resulting in a separate model and performance metrics for each year. It allows you to see how the model's performance varies from year to year and potentially spot any trends or anomalies.
+
+## Feature Selection Using Lasso Regression and Ridge Regression (ridge_reg_model.py)
+- This script provides a workflow for using Lasso Regression and Ridge Regression for feature selection and understanding feature importance.
+
+### Instructions
+  ```
+  ridge_model, selected_features, coefficients = perform_ridge_with_lasso_selection(
+          train_df,
+          'win_loss_percentage', 
+          test_size=0.3, 
+          random_state=42
+  )
+  ```
+
+  - In the above example, the dataset kbo_train.csv is loaded. The target variable is the column win_loss_percentage. The dataset is split into training and testing sets with a test size of 30%. The random state for the train-test split is set as 42.
+  
+  - After running the function, you will receive the trained Ridge model, a list of selected features based on Lasso's coefficients, and the Ridge model's coefficients.
+  
+  - This approach helps in reducing the dimensionality of your data and selects features that are most important in predicting the target variable. Using both Lasso and Ridge regression, it takes advantage of both Lasso's feature selection capabilities and Ridge's ability to work well even with correlated features.
+  
+  - Note: Ensure that the dataset file path, target column name, test size, and random state are correctly specified before running the function.
+
+### Expected output
+  ```
+  Lasso picked 23 variables and eliminated the other 27 variables
+  average_age          -0.000350
+  avg_runs_allowed     -0.062682
+  wins                  0.052297
+  losses               -0.050331
+  run_average_9         0.000322
+  runs_x                0.088040
+  walks                 0.000385
+  hit_batter           -0.000075
+  hits_9               -0.000109
+  homeruns_9           -0.001074
+  strikeouts_9          0.000711
+  average_batter_age    0.000485
+  avg_runs_scored       0.064126
+  runs_y               -0.088847
+  hits_y               -0.002030
+  triples              -0.000279
+  RBI                   0.000739
+  bases_on_balls       -0.001674
+  batting_average       0.000496
+  GDP                   0.000697
+  HBP                  -0.000387
+  sacrifice_hits        0.000241
+  sacrifice_flies       0.000057
+  dtype: float64
+  
+  Best alpha for Lasso:  0.0001
+  Best alpha for Ridge:  0.019306977288832496
+  ```
+![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/4fd3b22d-efe9-43eb-87fe-353dafac5bb0)
