@@ -81,37 +81,38 @@
 The PreprocessModelData class is a Python utility that allows for the preprocessing of structured datasets (e.g., CSV files). The class provides functions for handling missing data, separating features from target variables, scaling numerical features, and splitting datasets into training and testing subsets.
 
   - **Initialization**
-  The class is initialized with a dictionary (impute_strategy_dict) that specifies the imputation strategy ('mean', 'median', or 'mode') for each column in the dataframe that has missing data.
+    - The class is initialized with a dictionary (impute_strategy_dict) that specifies the imputation strategy ('mean', 'median', or 'mode') for each column in the dataframe that has missing data.
   
   - **handle_missing_data method**
-  This method goes through each column in the dataframe and fills missing values according to the specified strategy.
+    - This method goes through each column in the dataframe and fills missing values according to the specified strategy.
   
   - **separate_features_target method**
-  This method separates the features and the target column in the dataframe. If the target column is 'win_loss_percentage', it creates a new column 'categorical_win_loss_prob' which categorizes 'win_loss_percentage' into 'low', 'medium', or 'high' categories.
+    - This method separates the features and the target column in the dataframe. If the target column is 'win_loss_percentage', it creates a new column 'categorical_win_loss_prob' which categorizes 'win_loss_percentage' into 'low', 'medium', or 'high' categories.
   
   - **scale_features method**
-  This method standardizes the features in the dataframe using the StandardScaler from scikit-learn. This is often a necessary step before using many machine learning algorithms.
+    - This method standardizes the features in the dataframe using the StandardScaler from scikit-learn. This is often a necessary step before using many machine learning algorithms.
   
   - **split_data method**
-  This method splits the dataset into training and testing subsets. It uses scikit-learn's train_test_split function, which shuffles the dataset and splits it. The default test size is 20% of the total dataset.
+    - This method splits the dataset into training and testing subsets. It uses scikit-learn's train_test_split function, which shuffles the dataset and splits it. The default test size is 20% of the total dataset.
   
   - The PreprocessData class can be used in combination with the extract_mlb_game_data.py script. The script extracts and transforms the game data, and the class preprocesses it for machine learning applications. The imputation of missing values, scaling of features, and splitting of data are all common steps in a machine learning pipeline, and this class provides an easy and reusable way to perform these tasks.
 
 
 ## LDA Class
-  - **Initialization**: The class doesn't require any parameters during initialization.
+  - **Initialization**
+    - The class doesn't require any parameters during initialization.
     
   - **fit_lda method**
     - This method fits the LDA model on the training data. It takes the training data (X_train and y_train) and the number of components to keep (n_components) as input and returns the fitted LDA model and the transformed X_train.
     
   - **plot_lda method**
-    This method creates a scatter plot of the data in the first two linear discriminant spaces. The points are colored according to their class labels. This visualization helps understand how well the classes are separated by the LDA.
+    - This method creates a scatter plot of the data in the first two linear discriminant spaces. The points are colored according to their class labels. This visualization helps understand how well the classes are separated by the LDA.
 
 - **lda_coef method**
-    This method returns a dataframe that contains the coefficients of the discriminant function for each class. It can help interpret the impact of the features on the classification.
+    - This method returns a dataframe that contains the coefficients of the discriminant function for each class. It can help interpret the impact of the features on the classification.
 
 - **Usage in Main Script**
-    Both PreprocessModelData and LDA_explore classes are utilized in the main script for data preprocessing and analysis respectively. Here's a brief step-by-step rundown of the main script:
+    - Both PreprocessModelData and LDA_explore classes are utilized in the main script for data preprocessing and analysis respectively. Here's a brief step-by-step rundown of the main script:
 
   1. The script first initializes the PreprocessModelData and LDA_explore classes.
   
