@@ -48,7 +48,36 @@
   ```
 - The extraction and transformation process was carried out using mlb_collect.py using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
 
+## Generating Team Season Statistics (team_season_stat_gen.py)
 
+- This script is used to generate a DataFrame containing each team's season statistics, structured to be compatible with our other league datasets. It does this by merging extracted data from MLB datasets and computing relevant statistics.
+
+  Below is a brief summary of its steps:
+  
+  1. Load Data: The script first loads two dataframes from 'mlb_win_losses.csv' and 'mlb_data.csv'.
+  
+  2. Data Aggregation: The script then aggregates the statistics on a per team, per season basis from the MLB win-loss data. The statistics calculated include the total wins, total losses, win probability, and loss probability.
+     
+  4. Home and Away Win/Loss Calculation: Using the DataFrame created from 'mlb_win_losses.csv', the script separately calculates the total home wins and losses and away wins and losses for each team in each season.
+     
+  5. Statistical Calculation: Using these aggregate statistics, the script computes the win-loss ratio for each team in each season.
+  
+  6. Data Preparation: The script also processes 'mlb_data.csv' to create another DataFrame, grouping the data by 'season' and 'teamId' and calculating the mean for numerical columns.
+  
+  7. Data Merge: The two DataFrames created from 'mlb_win_losses.csv' and 'mlb_data.csv' are then merged based on 'season' and 'teamId'.
+  
+The resulting DataFrame is saved as 'team_win_loss_probabilities.csv'. This data includes all the provided features along with the calculated win-loss ratio, giving us a more comprehensive view of each team's performance in each season.
+  
+To run this script, use the following command:
+  
+  ```
+  python team_season_stat_gen.py
+  ```
+Please ensure that the input CSV files ('mlb_win_losses.csv' and 'mlb_data.csv') are in the correct path before running the script.
+
+Remember to check and confirm that the output file ('team_win_loss_probabilities.csv') is in the desired output directory after running the script.
+
+Keep in mind that the structure of your data files ('mlb_win_losses.csv' and 'mlb_data.csv') should conform to the structure expected by the script for it to run successfully. Check the example data provided for the expected format and structure.
 
 ## extract_mlb_game_data.py
 - This script loads, parses, and transforms a dataset containing information about baseball games. The source data is assumed to be in CSV format, with one of the columns containing JSON strings that encapsulate detailed game data.
