@@ -48,6 +48,8 @@
   ```
 - The extraction and transformation process was carried out using mlb_collect.py using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
 
+
+
 ### extract_mlb_game_data.py
 - This script loads, parses, and transforms a dataset containing information about baseball games. The source data is assumed to be in CSV format, with one of the columns containing JSON strings that encapsulate detailed game data.
   
@@ -73,6 +75,27 @@
   Finally, the complete DataFrame, containing the parsed and transformed game data, is saved to a new CSV file.
   
   This script is particularly useful for scenarios where game data is stored in JSON format within a CSV file, and where this data needs to be extracted, transformed, and saved in a flat, tabular format. Note that the script specifically looks for a 'games' column in the source CSV file and expects this to contain valid JSON strings.
+  
+### PreprocessModelData Class
+
+The PreprocessModelData class is a Python utility that allows for the preprocessing of structured datasets (e.g., CSV files). The class provides functions for handling missing data, separating features from target variables, scaling numerical features, and splitting datasets into training and testing subsets.
+
+**Initialization**
+The class is initialized with a dictionary (impute_strategy_dict) that specifies the imputation strategy ('mean', 'median', or 'mode') for each column in the dataframe that has missing data.
+
+**handle_missing_data method**
+This method goes through each column in the dataframe and fills missing values according to the specified strategy.
+
+**separate_features_target method**
+This method separates the features and the target column in the dataframe. If the target column is 'win_loss_percentage', it creates a new column 'categorical_win_loss_prob' which categorizes 'win_loss_percentage' into 'low', 'medium', or 'high' categories.
+
+**scale_features method**
+This method standardizes the features in the dataframe using the StandardScaler from scikit-learn. This is often a necessary step before using many machine learning algorithms.
+
+**split_data method**
+This method splits the dataset into training and testing subsets. It uses scikit-learn's train_test_split function, which shuffles the dataset and splits it. The default test size is 20% of the total dataset.
+
+The PreprocessData class can be used in combination with the extract_mlb_game_data.py script. The script extracts and transforms the game data, and the class preprocesses it for machine learning applications. The imputation of missing values, scaling of features, and splitting of data are all common steps in a machine learning pipeline, and this class provides an easy and reusable way to perform these tasks.
 
 ## pythagorean_expectation_modeling.py
 ### Preprocessing the Data
