@@ -1,5 +1,5 @@
 from preprocess_data import PreprocessData
-from LDA import LDA_explore
+from LDA import LDA
 import pandas as pd
 
 # Make more strategy for missing values
