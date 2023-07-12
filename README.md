@@ -22,9 +22,29 @@
     teamBoxScores_data = teamBoxScores_data.apply(lambda x: json.loads(x.replace('null', 'None')) if pd.notnull(x) else None)
     ```
   - The JSON data was then converted to a pandas DataFrame using the json_normalize function.
-    
-- **Data Concatenation**: The resulting DataFrames were then concatenated to create a complete dataset for analysis.
+    ```
+    teamBoxScores_df = pd.json_normalize(teamBoxScores_nested_json)
+    ```
+  - The resulting DataFrame was saved to a CSV file named "mlb_data.csv".
+    ```
+    teamBoxScores_df.to_csv('./mlb_data.csv', index=False)
+    ```
+- **Preprocessing the Data**: After the data extraction and conversion, some preprocessing steps were applied. The "gameDate" column, which contains the dates of games, was converted to the datetime format.
+  ```
+  data = pd.read_csv('mlb_data.csv')
+  data['gameDate'] = pd.to_datetime(data['gameDate'])
+  ```
+  - The year from each game date was extracted and stored in a new column, "year".
+  ```
+  data['year'] = data['gameDate'].dt.year
+  ```
+  - Finally, the data was grouped by year and by team ID to compute yearly statistics for each team. The computed yearly team stats were saved to separate CSV files for each year.
+  - With the data now unpacked from its nested JSON format and grouped by year and team, it is ready for easier analysis and modeling.
+  ```
+  for year in data['year'].unique():
+    yearly_data = data[data['year'] == year]
+    yearly_team_stats = yearly_data.groupby('teamId').sum()
+    yearly_team_stats.to_csv(f'year_{year}.csv')
 
-
-
-- The extraction and transformation process was carried out using custom Python scripts using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
+  ```
+- The extraction and transformation process was carried out using mlb_collect.py using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
