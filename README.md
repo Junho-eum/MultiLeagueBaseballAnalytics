@@ -55,7 +55,7 @@ Remember to check and confirm that the output files ('year_{year}.csv') are in t
 
 Keep in mind that the structure of your input data file ('train.csv') should conform to the structure expected by the script for it to run successfully. Check the example data provided for the expected format and structure.
 
-##  Standardize different datasets from different leagues into a consistent and structured format (team_season_stat_gen.py)
+##  Standardize different datasets from different leagues (team_season_stat_gen.py)
 
   - The function preprocess_league_data inside team_season_stat_gen.py script is used to standardize different datasets from different leagues into a consistent and structured format. This is crucial in ensuring the integrity and compatibility of the data during subsequent analysis.
   
