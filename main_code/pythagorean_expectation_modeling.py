@@ -38,7 +38,7 @@ def Pythagorean_expectation_modeling(df, runsScored, runsAllowed, win_loss_proba
 if __name__ == "__main__":
     # Load your datasets
     win_loss_prob = pd.read_csv('/Users/junhoeum/Desktop/Summer_23/KBO_analytics/code/team_win_loss_probabilities.csv')
-    teams = pd.read_csv('teams.csv')
+    teams = pd.read_csv('./dataset/mlb_teams.csv')
 
     # Create mapping from teamId to teamName
     team_mapping = teams.set_index('id')['name'].to_dict()
