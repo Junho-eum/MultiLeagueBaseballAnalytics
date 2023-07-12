@@ -47,3 +47,36 @@
     yearly_team_stats.to_csv(f'year_{year}.csv')
   ```
 - The extraction and transformation process was carried out using mlb_collect.py using pandas and json libraries. The scripts read the nested JSON, transformed it into a more readable format, and created separate datasets for different statistics such as box scores and team win/loss probabilities.
+
+### pythagorean_expectation_modeling.py
+- Preprocessing the Data
+  The script starts by loading two data files: team_win_loss_probabilities.csv and teams.csv. The former is presumed to contain historical win-loss probability data for baseball teams, while the latter contains team identifiers and corresponding team names. A dictionary mapping team IDs to team names is created from the teams.csv data.
+  
+  Then, the script enters a loop that ranges from the year 2018 to 2021 (the last year is exclusive in Python's range function). For each year in the range:
+  
+  The script reads in the yearly team box score data from a CSV file named in the format year_{year}.csv (for example, year_2018.csv for 2018). This data file is presumed to contain box score data (e.g., runs scored and runs allowed) for each team for that year.
+  
+  It then creates a column year and sets it to the current year being processed.
+  
+  The box score data is grouped by team ID and year, and the total (sum) runs scored and runs allowed for each team in that year is computed.
+  
+  If the grouped data is empty (which means there's no data for that year), the script will skip the rest of the current loop iteration and move to the next year.
+  
+  The script then uses the previously created team ID-name mapping to add a new column, teamName, to the data.
+  
+  Finally, it merges the processed box score data with the win-loss probability data based on team name and year. If the merged data is empty (which could be due to missing win-loss probability data for that year or team), the script will again skip the rest of the current loop iteration and move to the next year.
+  
+  At the end of this preprocessing step, for each year in the given range, you will have a dataset that includes total runs scored, total runs allowed, team names, and corresponding win-loss probabilities for each team. These datasets are then saved as pythagorean_output_{year}.csv.
+
+- Pythagorean Expectation Calculation and Modeling
+The Pythagorean expectation is a formula that estimates a team's win percentage based on the number of runs it scores and allows. In baseball analytics, it's often used to evaluate a team's performance compared to their actual win percentage.
+
+The script computes the Pythagorean expectation for each team in the processed data and adds it as a new column, pythag_expect.
+
+The script then prepares the data for the machine learning model. It creates a 2-D feature matrix X with runs scored and runs allowed, and a target variable y with the win-loss probability.
+
+Next, the script uses scikit-learn's PolynomialFeatures to generate polynomial and interaction features from the runs scored and runs allowed. This expanded feature matrix X_poly is then split into training and testing datasets, with 80% of the data used for training and 20% for testing.
+
+A linear regression model is trained using the training data. The model's performance is evaluated on the test data using the mean squared error (MSE) and the R-squared (R²) statistic, which are printed out for each year.
+
+This process is repeated for each year in the range, resulting in a separate model and performance metrics for each year. It allows you to see how the model's performance varies from year to year and potentially spot any trends or anomalies.
