@@ -55,6 +55,55 @@ Remember to check and confirm that the output files ('year_{year}.csv') are in t
 
 Keep in mind that the structure of your input data file ('train.csv') should conform to the structure expected by the script for it to run successfully. Check the example data provided for the expected format and structure.
 
+##  Standardize different datasets from different leagues into a consistent and structured format (team_season_stat_gen.py)
+
+  - The function preprocess_league_data inside team_season_stat_gen.py script is used to standardize different datasets from different leagues into a consistent and structured format. This is crucial in ensuring the integrity and compatibility of the data during subsequent analysis.
+  
+  - The function takes as input three CSV files: the first containing data about each game (including the season, home team, away team, home team wins, and home team losses), the second containing more detailed statistics about each game, and the third containing information about the teams.
+    
+  ```
+  df1 = pd.read_csv(df1_path)
+  df2 = pd.read_csv(df2_path)
+  df_team = pd.read_csv(team_info_path)
+  ```
+
+The function performs several transformations and aggregations on the data:
+
+  - It calculates the total wins and losses for each team in each season, both for home games and away games.
+    
+  - It then calculates the win-loss percentage for each team in each season.
+    
+  - It averages the detailed statistics for each team in each season.
+    
+  - It merges these different dataframes into a final dataframe.
+    
+  - The resulting dataframe provides a complete and detailed view of the performance of each team in each season. Each row represents one team in one season and includes information about the number of wins and losses, the win-loss percentage, and other statistics averaged over all the games in that season.
+
+  ```
+  df1_home = df1.groupby(['season', 'homeId']).agg({
+      'homeWins': 'sum',
+      'homeLosses': 'sum'
+  }).reset_index().rename(columns={'homeId': 'teamId', 'homeWins': 'wins', 'homeLosses': 'losses'})
+  
+  df1_away = df1.groupby(['season', 'awayId']).agg({
+      'awayWins': 'sum',
+      'awayLosses': 'sum'
+  }).reset_index().rename(columns={'awayId': 'teamId', 'awayWins': 'wins', 'awayLosses': 'losses'})
+  
+  team_season_data = pd.concat([df1_home, df1_away])
+  
+  team_season_data = team_season_data.groupby(['season', 'teamId']).agg({'wins': 'sum', 'losses': 'sum'}).reset_index()
+  ```
+
+  - Finally, the function also renames the columns in the final dataframe to match a standard format. This makes the data easier to work with, as the column names are consistent across different leagues and datasets.
+
+  ```
+  column_mapping = {...}
+  final_df.rename(columns=column_mapping, inplace=True)
+  final_df = final_df.drop(columns='id')
+  ```
+
+  - By preparing the data in this way, the preprocess_league_data function makes it easier to analyze the performance of different teams across different seasons and even across different leagues.
 
 ## Expected Output
   - The script will output the Mean Squared Error (MSE) and R-Squared (R^2) for each year in the data. Here are some example outputs you might expect:
