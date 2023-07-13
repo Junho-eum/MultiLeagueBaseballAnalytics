@@ -418,13 +418,13 @@ The Python code in log5_model.py calculates these probabilities for all pairings
 
 ## Poisson and Negative Binomial Models (poisson_negative_binomial_model.py)
 
-    - Using a Poisson regression model, which is suitable for predicting counts.  Treating the number of runs scored as a count, I built a model that predicts the number of runs a team is expected to score based on their stats.
+- Using a Poisson regression model, which is suitable for predicting counts.  Treating the number of runs scored as a count, I built a model that predicts the number of runs a team is expected to score based on their stats.
     
     - **Poisson Regression Model**: This is a type of Generalized Linear Model (GLM) that transforms the dependent variable using the natural logarithm. It's useful for modeling outcomes that represent counts, like the number of runs scored in a game. The assumption here is that the data follows a Poisson distribution.
     
     - **Negative Binomial Regression Model**: This model is a generalization of the Poisson model. It's used when the variance of the data is greater than the mean (which is often the case in real-world count data), resulting in overdispersion. The negative binomial model accounts for this overdispersion by adding a parameter to model the variance separately from the mean.
 
-    #### **Usage**
+### **Usage**
 - To use poisson_negative_binomial_mode.py, you first need to define your features for each dataset, like so:
     ```
     kbo_features = ['average_age', 'avg_runs_allowed', 'ERA', 'total_games', 'walks', 'strikeouts_x', 'batting_average', 'OBP', 'SLG', 'OPS']
@@ -442,13 +442,76 @@ The Python code in log5_model.py calculates these probabilities for all pairings
     ```
 - These functions will add a new column to your DataFrame with the predicted win probabilities and generate a histogram showing the distribution of these probabilities.
 
+## Expected Output
 
+```
+Using 'total_runs_scored' as the dependent variable
+Defining independent variables
+Adding constant to the independent variables
+Fitting the model, this may take a while...
+Predicting win probabilities
+Applying sigmoid transformation
+Model summary:
+                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:      total_runs_scored   No. Observations:                  323
+Model:                            GLM   Df Residuals:                      312
+Model Family:                 Poisson   Df Model:                           10
+Link Function:                    Log   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:                -1501.6
+Date:                Thu, 13 Jul 2023   Deviance:                       354.09
+Time:                        14:55:28   Pearson chi2:                     354.
+No. Iterations:                     4   Pseudo R-squ. (CS):              1.000
+Covariance Type:            nonrobust                                         
+====================================================================================
+                       coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------------
+const                2.8069      0.076     36.767      0.000       2.657       2.957
+average_age          0.0002      0.002      0.141      0.888      -0.003       0.003
+avg_runs_allowed     0.0535      0.020      2.656      0.008       0.014       0.093
+ERA                 -0.0660      0.021     -3.216      0.001      -0.106      -0.026
+total_games          0.0094      0.000     19.728      0.000       0.008       0.010
+walks             7.247e-05   4.48e-05      1.617      0.106   -1.54e-05       0.000
+strikeouts_x      1.909e-05   2.66e-05      0.718      0.473    -3.3e-05    7.12e-05
+batting_average      0.9343      0.392      2.384      0.017       0.166       1.702
+OBP                  9.9074      4.757      2.083      0.037       0.584      19.231
+SLG                  7.9076      4.767      1.659      0.097      -1.436      17.251
+OPS                 -6.0085      4.763     -1.261      0.207     -15.345       3.328
+====================================================================================
+Using 'RBI' as the dependent variable
+Defining independent variables
+Adding constant to the independent variables
+Fitting the model, this may take a while...
+Predicting win probabilities
+Applying sigmoid transformation
+Model summary:
+                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:                    RBI   No. Observations:                  124
+Model:                            GLM   Df Residuals:                      112
+Model Family:                 Poisson   Df Model:                           11
+Link Function:                    Log   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:                -206.75
+Date:                Thu, 13 Jul 2023   Deviance:                      0.31470
+Time:                        14:55:28   Pearson chi2:                    0.311
+No. Iterations:                     4   Pseudo R-squ. (CS):            0.09173
+Covariance Type:            nonrobust                                         
+===================================================================================
+                      coef    std err          z      P>|z|      [0.025      0.975]
+-----------------------------------------------------------------------------------
+const               0.4225      2.521      0.168      0.867      -4.519       5.364
+wins            -8.389e-07   3.07e-05     -0.027      0.978   -6.09e-05    5.93e-05
+losses           2.717e-06   3.36e-05      0.081      0.935   -6.31e-05    6.85e-05
+home               -0.0572      0.729     -0.078      0.937      -1.487       1.372
+avg_runs_scored     0.2177      0.227      0.958      0.338      -0.228       0.663
+doubles             0.0321      0.273      0.118      0.906      -0.504       0.568
+triples             0.0695      0.818      0.085      0.932      -1.535       1.674
+homeruns            0.0032      0.270      0.012      0.991      -0.526       0.533
+strikeouts_x       -0.0047      0.069     -0.068      0.946      -0.140       0.130
+bases_on_balls      0.0175      0.125      0.140      0.888      -0.227       0.262
+hits_x             -0.0204      0.161     -0.127      0.899      -0.336       0.295
+at_bats             0.0045      0.097      0.046      0.963      -0.185       0.194
+===================================================================================
+```
 
-
-
-
-
-
-
-
-
+![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/9595dac9-564a-43c2-afab-5d49bc1fa8f7)
