@@ -372,3 +372,25 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
   - Additionally, a plot will be displayed showing the feature importance based on the coefficients from the Lasso regression. The plot is a horizontal bar plot where the x-axis represents the coefficient value and the y-axis represents the feature names. The longer the bar, the higher the importance of that feature.
     
 ![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/4fd3b22d-efe9-43eb-87fe-353dafac5bb0)
+
+## Log5 Method for Predicting Winning Percentages
+
+We can use the log5 method to calculate the probability of one team defeating another, given their individual winning percentages.
+Given two teams, A and B, with winning percentages WinA and WinB respectively, the probability that team A will win against team B is given by:
+
+    ```
+    P(A beats B) = (WinA - WinA*WinB) / (WinA + WinB - 2*WinA*WinB)
+    ```
+The formula accounts for the strengths of both teams. If both teams have a winning percentage of .500, the Log5 estimate is also .500, indicating an equal chance for both teams. But if one team is stronger, say team A has a winning percentage of .600 and team B has a winning percentage of .400, the Log5 estimate increases the probability that team A will win (to approximately .600) and decreases the probability that team B will win.
+
+The Python code we have been discussing calculates these probabilities for all pairs of teams in a given dataset, returning a pandas DataFrame where each cell at the intersection of team_a and team_b represents the probability that team_a will win against team_b.
+
+
+
+
+
+
+
+
+
+
