@@ -375,20 +375,45 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
 
 ## Log5 Method for Predicting Winning Percentages
 
-We can use the log5 method to calculate the probability of one team defeating another, given their individual winning percentages.
-Given two teams, A and B, with winning percentages WinA and WinB respectively, the probability that team A will win against team B is given by:
+The log5 method is a simple, yet powerful model for predicting the outcome of a matchup between two teams. It was developed by Bill James, a pioneer in baseball analytics. The method takes into account the individual winning percentages of the two teams, and uses these to predict the outcome of a matchup.
 
+Here's how the formula works:
+
+Given two teams, A and B, with winning percentages WinA and WinB respectively, the probability that team A will win against team B is given by:
     ```
     P(A beats B) = (WinA - WinA*WinB) / (WinA + WinB - 2*WinA*WinB)
     ```
-The formula accounts for the strengths of both teams. If both teams have a winning percentage of .500, the Log5 estimate is also .500, indicating an equal chance for both teams. But if one team is stronger, say team A has a winning percentage of .600 and team B has a winning percentage of .400, the Log5 estimate increases the probability that team A will win (to approximately .600) and decreases the probability that team B will win.
 
-The Python code we have been discussing calculates these probabilities for all pairs of teams in a given dataset, returning a pandas DataFrame where each cell at the intersection of team_a and team_b represents the probability that team_a will win against team_b.
+- The formula accounts for the strengths of both teams. If both teams have a winning percentage of .500, the Log5 estimate is also .500, indicating an equal chance for both teams. But if one team is stronger, say team A has a winning percentage of .600 and team B has a winning percentage of .400, the Log5 estimate increases the probability that team A will win (to approximately .600) and decreases the probability that team B will win.
+The Python code in log5_model.py calculates these probabilities for all pairings of teams in a given league. The output is a 2D matrix where both rows and columns represent teams. For example, the entry at row i and column j represents the probability that team i will beat team j.
 
+- The output is a 2D matrix where both rows and columns represent teams. For example, the entry at row i and column j represents the probability that team i will beat team j. 
+    ```
+    KBO Probabilities: 
+    |                   | Binggre Eagles | MBC Blue Dragons | Chungbo Pintos | Sammi Superstars |
+    |-------------------|----------------|------------------|----------------|------------------|
+    | Binggre Eagles    | NaN            | 0.415986         | 0.239861       | 0.170191         |
+    | MBC Blue Dragons  | 0.584014       | NaN              | 0.51466        | 0.408016         |
+    | Chungbo Pintos    | 0.760139       | 0.48534          | NaN            | 0.218646         |
+    | Sammi Superstars  | 0.829809       | 0.591984         | 0.781354       | NaN              |
+    
+    MLB Probabilities:
+    
+    |     | 108      | 109      | 110      | 111      |
+    |-----|----------|----------|----------|----------|
+    | 108 | NaN      | 0.646016 | 0.659023 | 0.469629 |
+    | 109 | 0.353984 | NaN      | 0.514338 | 0.326687 |
+    | 110 | 0.340977 | 0.485662 | NaN      | 0.314196 |
+    | 111 | 0.530371 | 0.673313 | 0.685804 | NaN      |
+    
+    ```
 
+- The Python code calculates these probabilities for all pairs of teams in a given dataset, returning a pandas DataFrame where each cell at the intersection of team_a and team_b represents the probability that team_a will win against team_b.
 
-
-
+- Visual representation of this output using a heatmap is also provided. The heatmap is a useful tool for quickly identifying which teams are more likely to win against others. In the heatmap, darker colors represent higher probabilities.
+  
+![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/cff5df2f-4437-4ffc-9141-d3464a7660a9)
+![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/e5a4c31a-9415-4f96-922c-3cf7a133dfbb)
 
 
 
