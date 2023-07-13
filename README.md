@@ -314,6 +314,17 @@ The PreprocessModelData class is a Python utility that allows for the preprocess
 
 - This process is repeated for each year in the range, resulting in a separate model and performance metrics for each year. It allows you to see how the model's performance varies from year to year and potentially spot any trends or anomalies.
 
+## Expected Output
+
+The Pythagorean expectation model generates an informative scatter plot that compares the actual win probability with the predicted win probability for the MLB teams over the years in scope. The plot also includes a regression line (red) that indicates the relationship between these two variables. 
+
+![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/2a16ab56-c6cb-4e21-8f44-3366231a58d7)
+
+Each data point in the scatter plot represents a specific team in a specific year. The x-coordinate of the point indicates the team's actual win probability, while the y-coordinate indicates the win probability predicted by the Pythagorean expectation model. The closer a point is to the regression line, the closer the model's prediction was to the actual outcome.
+
+For a more detailed, interactive exploration of the plot, you can view the Plotly-generated HTML file [here](./Baseball_Analytics_main/figures/pythagorean_model_MLB.html).
+
+
 ## Feature Selection Using Lasso Regression and Ridge Regression (ridge_reg_model.py)
 - This script provides a workflow for using Lasso Regression and Ridge Regression for feature selection and understanding feature importance.
 
