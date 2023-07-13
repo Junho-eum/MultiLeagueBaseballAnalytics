@@ -4,8 +4,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
-import matplotlib.pyplot as plt
-import seaborn as sns  # import seaborn
+import plotly.graph_objs as go  # import plotly
+import plotly.io as pio
 
 class PythagoreanExpectationModel:
     def __init__(self, runsScored, runsAllowed, win_loss_probability):
@@ -28,22 +28,29 @@ class PythagoreanExpectationModel:
 
         model = LinearRegression()
         model.fit(X_train, y_train)
-
+        
         y_pred = model.predict(X_test)
 
         mse_pythag = mean_squared_error(y_test, y_pred)
         r2_pythag = r2_score(y_test, y_pred)
         print(f'Pythagorean Expectation: MSE = {mse_pythag}, R^2 = {r2_pythag}')
 
-        # Use seaborn to create the plot
-        plt.figure(figsize=(10, 6))  # increase the size of the plot
-        sns.regplot(x=y_test, y=y_pred, scatter_kws={"color": "blue", "alpha": 0.3}, line_kws={"color": "red"})
-        plt.title('Pythagorean Expectation Model for MLB', fontsize=20)
-        plt.xlabel('Actual Win Probability', fontsize=16)
-        plt.ylabel('Predicted Win Probability', fontsize=16)
-        plt.xlim(0, 1)  # set the limits of x-axis
-        plt.ylim(0, 1)  # set the limits of y-axis
-        plt.show()
+        # Inside your train_model function
+        scatter = go.Scatter(x=y_test, y=y_pred, mode='markers', name='Data', 
+                            marker=dict(size=10, color='blue', line=dict(width=6, color='rgb(0, 0, 0)')))  # blue scatter dots
+
+        # Calculate line of best fit
+        m, b = np.polyfit(y_test, y_pred, 1)
+        line = go.Scatter(x=[min(y_test), max(y_test)], y=[m*min(y_test) + b, m*max(y_test) + b], mode='lines', 
+                        name='Fit', line=dict(color='red', width=4))  # thicker, red regression line
+
+
+        layout = go.Layout(title='Pythagorean Expectation Model', xaxis=dict(title='Actual Win Probability'), 
+                           yaxis=dict(title='Predicted Win Probability'), showlegend=True)
+        
+        fig = go.Figure(data=[scatter, line], layout=layout)
+        pio.write_html(fig, 'pythagorean_model_MLB.html')  # save as HTML
+        fig.show()
 
 
 def main():
