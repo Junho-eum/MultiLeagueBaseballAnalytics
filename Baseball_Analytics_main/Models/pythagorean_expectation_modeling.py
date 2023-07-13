@@ -4,6 +4,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
+import seaborn as sns  # import seaborn
 
 class PythagoreanExpectationModel:
     def __init__(self, runsScored, runsAllowed, win_loss_probability):
@@ -33,11 +35,24 @@ class PythagoreanExpectationModel:
         r2_pythag = r2_score(y_test, y_pred)
         print(f'Pythagorean Expectation: MSE = {mse_pythag}, R^2 = {r2_pythag}')
 
+        # Use seaborn to create the plot
+        plt.figure(figsize=(10, 6))  # increase the size of the plot
+        sns.regplot(x=y_test, y=y_pred, scatter_kws={"color": "blue", "alpha": 0.3}, line_kws={"color": "red"})
+        plt.title('Pythagorean Expectation Model for MLB', fontsize=20)
+        plt.xlabel('Actual Win Probability', fontsize=16)
+        plt.ylabel('Predicted Win Probability', fontsize=16)
+        plt.xlim(0, 1)  # set the limits of x-axis
+        plt.ylim(0, 1)  # set the limits of y-axis
+        plt.show()
+
+
 def main():
     win_loss_prob = pd.read_csv('../datasets/MLB_datasets/mlb_win_loss_probabilities.csv')
     teams = pd.read_csv('../datasets/MLB_datasets/mlb_teams.csv')
     team_mapping = teams.set_index('id')['name'].to_dict()
     pythagorean_model = PythagoreanExpectationModel('runsScored', 'runsPitching', 'winProb')
+    
+    all_years_dataset = pd.DataFrame()  # Empty DataFrame to hold data for all years
 
     for year in range(2018, 2022):
         team_boxscore = pd.read_csv(f'../datasets/MLB_datasets/MLB_yearly_boxscore/year_{year}.csv')
@@ -60,9 +75,11 @@ def main():
             continue
 
         dataset = pythagorean_model.calculate_pythag_expect(dataset)
-        dataset.to_csv(f"../datasets/MLB_datasets/pe_model_yearly_outputs/pythagorean_output_{year}.csv")
+        all_years_dataset = all_years_dataset.append(dataset)  # Append current year's data
 
-        pythagorean_model.train_model(dataset)
+    # Train model and plot for all years' data
+    all_years_dataset.to_csv(f"../datasets/MLB_datasets/pe_model_yearly_outputs/pythagorean_output_all_years.csv")
+    pythagorean_model.train_model(all_years_dataset)
 
 if __name__ == "__main__":
     main()
