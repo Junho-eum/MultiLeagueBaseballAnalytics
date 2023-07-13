@@ -416,6 +416,39 @@ The Python code in log5_model.py calculates these probabilities for all pairings
 ![user_input_1](https://github.com/Junho-eum/Baseball_Analytics/assets/74083204/e5a4c31a-9415-4f96-922c-3cf7a133dfbb)
 
 
+## Poisson and Negative Binomial Models (poisson_negative_binomial_model.py)
+
+    - Using a Poisson regression model, which is suitable for predicting counts.  Treating the number of runs scored as a count, I built a model that predicts the number of runs a team is expected to score based on their stats.
+    
+    - **Poisson Regression Model**: This is a type of Generalized Linear Model (GLM) that transforms the dependent variable using the natural logarithm. It's useful for modeling outcomes that represent counts, like the number of runs scored in a game. The assumption here is that the data follows a Poisson distribution.
+    
+    - **Negative Binomial Regression Model**: This model is a generalization of the Poisson model. It's used when the variance of the data is greater than the mean (which is often the case in real-world count data), resulting in overdispersion. The negative binomial model accounts for this overdispersion by adding a parameter to model the variance separately from the mean.
+
+    #### **Usage**
+- To use poisson_negative_binomial_mode.py, you first need to define your features for each dataset, like so:
+    ```
+    kbo_features = ['average_age', 'avg_runs_allowed', 'ERA', 'total_games', 'walks', 'strikeouts_x', 'batting_average', 'OBP', 'SLG', 'OPS']
+    mlb_features = ['wins', 'losses', 'home', 'avg_runs_scored', 'doubles', 'triples', 'homeruns', 'strikeouts_x', 'bases_on_balls', 'hits_x', 'at_bats']
+    ```
+- Then, call the predict_win_probability function, passing in the relevant DataFrame and list of features:
+    ```
+    df_kbo = predict_win_probability(df_kbo, kbo_features)
+    df_mlb = predict_win_probability(df_mlb, mlb_features)
+    ```
+- After running the model, you can visualize the results with the plot_predicted_win_probability function:
+    ```
+    plot_predicted_win_probability(df_kbo, 'KBO')
+    plot_predicted_win_probability(df_mlb, 'MLB')
+    ```
+- These functions will add a new column to your DataFrame with the predicted win probabilities and generate a histogram showing the distribution of these probabilities.
+
+
+
+
+
+
+
+
 
 
 
