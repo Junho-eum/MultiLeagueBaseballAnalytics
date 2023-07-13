@@ -6,37 +6,39 @@ https://www.kaggle.com/competitions/mlb-player-digital-engagement-forecasting/da
 
 ## Script Structure
 
-├── KBO_preprocessing
-│   └── preprocess_kbo_data.py
-├── MLB_prprocessing
-│   ├── extract_mlb_boxscore.py
-│   ├── extract_mlb_game_data.py
-│   └── team_season_stat_gen.py
-├── Models
-│   ├── LDA.py
-│   ├── lda_feature_coefficients.csv
-│   ├── multinom_logreg.py
-│   └── pythagorean_expectation_modeling.py
-├── NPB_preprocessing
-├── README.md
-└── datasets
-    ├── KBO_datasets
-    ├── MLB_datasets
-    │   ├── MLB_pythagorean_output_2018.csv
-    │   ├── MLB_pythagorean_output_2019.csv
-    │   ├── MLB_pythagorean_output_2020.csv
-    │   ├── MLB_pythagorean_output_2021.csv
-    │   ├── MLB_team_season_statistics.csv
-    │   ├── mlb_data.csv
-    │   ├── mlb_teams.csv
-    │   ├── mlb_win_losses.csv
-    │   ├── team_season_statistics.csv
-    │   ├── year_2018.csv
-    │   ├── year_2019.csv
-    │   ├── year_2020.csv
-    │   └── year_2021.csv
-    └── NPB_datasets
-
+    ```
+    ├── KBO_preprocessing
+    │   └── preprocess_kbo_data.py
+    ├── MLB_prprocessing
+    │   ├── extract_mlb_boxscore.py
+    │   ├── extract_mlb_game_data.py
+    │   └── team_season_stat_gen.py
+    ├── Models
+    │   ├── LDA.py
+    │   ├── lda_feature_coefficients.csv
+    │   ├── multinom_logreg.py
+    │   └── pythagorean_expectation_modeling.py
+    ├── NPB_preprocessing
+    ├── README.md
+    └── datasets
+        ├── KBO_datasets
+        ├── MLB_datasets
+        │   ├── MLB_pythagorean_output_2018.csv
+        │   ├── MLB_pythagorean_output_2019.csv
+        │   ├── MLB_pythagorean_output_2020.csv
+        │   ├── MLB_pythagorean_output_2021.csv
+        │   ├── MLB_team_season_statistics.csv
+        │   ├── mlb_data.csv
+        │   ├── mlb_teams.csv
+        │   ├── mlb_win_losses.csv
+        │   ├── team_season_statistics.csv
+        │   ├── year_2018.csv
+        │   ├── year_2019.csv
+        │   ├── year_2020.csv
+        │   └── year_2021.csv
+        └── NPB_datasets
+    ```
+    
 ## Extracting Yearly Team Box Score Data (mlb_collect.py)
 - This script is used to process and transform the MLB data sourced from the Kaggle MLB Player Digital Engagement Forecasting competition. The raw data includes nested JSON within a CSV file, which is then extracted and transformed into a more usable format.
 
